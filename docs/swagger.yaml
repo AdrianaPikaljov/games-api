@@ -54,7 +54,7 @@ paths:
           description: One or all params are missing
           content:
             application/json:
-              schema:
+              schema: &id001
                 $ref: '#/components/schemas/error'
               examples:
                 Params missing:
@@ -67,12 +67,6 @@ paths:
       summary: Get full details of a game
       description: Returns full details of a given id game
       operationId: id
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
       responses:
         '200':
           description: Returns full details of a given id game
@@ -98,6 +92,34 @@ paths:
                 Game /w+ was not found:
                   value:
                     error: Game \w+ was not found in game array
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+    delete:
+      tags:
+        - delete-game
+      summary: Deletes a game
+      description: Deletes a game with a given id
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/delete-game'
+      responses:
+        '204':
+          description: Game was deleted successfully
+        '404':
+          description: Game was not found in games array
+          content:
+            application/json:
+              schema: *id001
+              examples:
+                Game not found:
+                  value:
+                    error: Game not found
 components:
   schemas:
     error:
@@ -123,3 +145,13 @@ components:
       example:
         name: Tetris
         price: 0.99
+    delete-game:
+      title: Root Type for delete-game
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: integer
+      example:
+        id: 1

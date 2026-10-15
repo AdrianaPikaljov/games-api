@@ -46,6 +46,15 @@ app.post('/games', (req, res) => {
         .location(`${getBaseUrl(req)}/games/${games.length}`)
         .send(game)
 })
+app.delete('/games/:id', (req, res) => {
+    if (typeof games[req.params.id - 1] === 'undefined') {
+        return res.status(404).send({error: "Game not found"})
+    }
+
+    games.splice(req.params.id - 1, 1)
+
+    res.status(204).send({error: "No content"})
+})
 
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 
