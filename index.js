@@ -63,6 +63,27 @@ app.delete('/games/:id', (req, res) => {
     res.status(204).send({error: "No content"})
 })
 
+app.put('/games/:id', (req, res) => {
+    const game = games.find(g => g.id == req.params.id)
+    if (typeof game === 'undefined') {
+        return res.status(404).send({error: "Game not found"})
+    }
+
+    if (!req.body || !req.body.name || !req.body.price) {
+        return res.status(400).send({ error: 'One or all params are missing' })
+    }
+
+    const exists = games.some(g => g.id != game.id && g.name.toLowerCase() === req.body.name.toLowerCase())
+    if (exists) {
+        return res.status(409).send({ error: 'Game with this name already exists' })
+    }
+
+    game.name = req.body.name
+    game.price = req.body.price
+
+    res.send(game)
+})
+
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 
 app.listen(port, () => {

@@ -54,7 +54,7 @@ paths:
           description: One or all params are missing
           content:
             application/json:
-              schema: &id001
+              schema: &id002
                 $ref: '#/components/schemas/error'
               examples:
                 Params missing:
@@ -92,6 +92,53 @@ paths:
                 Game /w+ was not found:
                   value:
                     error: Game \w+ was not found in game array
+    put:
+      tags:
+        - update-game
+      summary: Updates a game
+      description: Updates name and price of a game with a given id
+      requestBody:
+        description: New data for the game
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/new-game'
+            examples:
+              Updated game:
+                value:
+                  name: 'Witcher 3: GOTY'
+                  price: 19.99
+      responses:
+        '200':
+          description: Returns the updated game
+          content:
+            application/json:
+              examples:
+                Updated game:
+                  value:
+                    id: 1
+                    name: 'Witcher 3: GOTY'
+                    price: 19.99
+        '400':
+          description: One or all params are missing
+          content:
+            application/json:
+              schema: &id001
+                $ref: '#/components/schemas/error'
+              examples:
+                Params missing:
+                  value:
+                    error: One or all params are missing
+        '404':
+          description: Game was not found in games array
+          content:
+            application/json:
+              schema: *id001
+              examples:
+                Game not found:
+                  value:
+                    error: Game not found
     parameters:
       - name: id
         in: path
@@ -115,7 +162,7 @@ paths:
           description: Game was not found in games array
           content:
             application/json:
-              schema: *id001
+              schema: *id002
               examples:
                 Game not found:
                   value:
