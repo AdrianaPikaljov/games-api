@@ -35,6 +35,10 @@ app.post('/games', (req, res) => {
     if (!req.body || !req.body.name || !req.body.price) {
         return res.status(400).send({ error: 'One or all params are missing' })
     }
+    const exists = games.some(g => g.name.toLowerCase() === req.body.name.toLowerCase())
+    if (exists) {
+        return res.status(409).send({ error: 'Game with this name already exists' })
+    }
     let game = {
         id: Math.max(0, ...games.map(g => g.id)) + 1,
         price: req.body.price,
