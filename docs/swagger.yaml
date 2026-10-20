@@ -152,11 +152,6 @@ paths:
         - delete-game
       summary: Deletes a game
       description: Deletes a game with a given id
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/delete-game'
       responses:
         '204':
           description: Game was deleted successfully
@@ -198,13 +193,3 @@ components:
       example:
         name: Tetris
         price: 0.99
-    delete-game:
-      title: Root Type for delete-game
-      type: object
-      required:
-        - id
-      properties:
-        id:
-          type: integer
-      example:
-        id: 1
