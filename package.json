@@ -19,7 +19,9 @@
   },
   "homepage": "https://github.com/AdrianaPikaljov/games-api#readme",
   "dependencies": {
+    "dotenv": "^18.0.8",
     "express": "^5.3.0",
+    "mongoose": "^8.24.6",
     "swagger-ui-express": "^5.0.1",
     "yamljs": "^0.3.0"
   }
